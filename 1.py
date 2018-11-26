@@ -10,7 +10,8 @@ h = ['0'] * cols
 
 for i in range(1, rows):
     t = traindata[i]
-    if t[cols-1] == '0':
+    if t[cols-1] == '0\n':
+        print('Negative example ignored')
         continue
     for y in range(0, cols-1):
         if h[y] == t[y]:
