@@ -11,8 +11,9 @@ mush = mush.drop(test.index)
 probs = {}
 probcl = {}
 for x in classes:
-    tot = len(mushcl)
+
     mushcl = mush[mush[target] == x][features]
+    tot = len(mushcl)
     probcl[x] = float(tot/len(mush))
     clsp = {}
     for col in mushcl.columns:

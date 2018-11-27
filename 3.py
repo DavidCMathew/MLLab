@@ -59,7 +59,6 @@ def attribute_selection(data):
 
             # calculation of Information Gain
         infoGain = baseEntropy - attrEntropy
-        print(infoGain)
         # identify the attribute with max info-gain
         if infoGain > max_InfoGain:
             max_InfoGain = infoGain
