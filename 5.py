@@ -22,7 +22,7 @@ for x in classes:
             pr = cnt/tot
             colp[val] = pr
         clsp[col] = colp
-        probs[x] = clsp
+    probs[x] = clsp
 
 
 def probabs(x):
