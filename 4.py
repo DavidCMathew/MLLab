@@ -14,33 +14,33 @@ def der_sigmoid(x):
 
 epoch = 5000
 lr = 0.01
-i_layer_neurons = 2
-h_layer_neurons = 3
-o_layer_neurons = 1
+neurons_i = 2
+neurons_h = 3
+neurons_o = 1
 
-weight_h = np.random.uniform(size=(i_layer_neurons, h_layer_neurons))
-bias_h = np.random.uniform(size=(1, h_layer_neurons))
-weight_o = np.random.uniform(size=(h_layer_neurons, o_layer_neurons))
-bias_o = np.random.uniform(size=(1, o_layer_neurons))
+weight_h = np.random.uniform(size=(neurons_i, neurons_h))
+bias_h = np.random.uniform(size=(1, neurons_h))
+weight_o = np.random.uniform(size=(neurons_h, neurons_o))
+bias_o = np.random.uniform(size=(1, neurons_o))
 
 for i in range(epoch):
     inp_h = np.dot(X, weight_h) + bias_h
     out_h = sigmoid(inp_h)
 
     inp_o = np.dot(out_h, weight_o) + bias_o
-    output = sigmoid(inp_o)
+    out_o = sigmoid(inp_o)
 
-    err_o = y - output
-    outgrad = der_sigmoid(output)
-    d_output = err_o * outgrad
+    err_o = y - out_o
+    grad_o = der_sigmoid(out_o)
+    delta_o = err_o * grad_o
 
-    err_h = d_output.dot(weight_o.T)
-    hiddengrad = der_sigmoid(out_h)
-    d_hidden = err_h * hiddengrad
+    err_h = delta_o.dot(weight_o.T)
+    grad_h = der_sigmoid(out_h)
+    delta_h = err_h * grad_h
 
-    weight_o += out_h.T.dot(d_output) * lr
-    weight_h += X.T.dot(d_hidden) * lr
+    weight_o += out_h.T.dot(delta_o) * lr
+    weight_h += X.T.dot(delta_h) * lr
 
 print('Input: ', X)
 print('Actual: ', y)
-print('Predicted: ', output)
+print('Predicted: ', out_o)
