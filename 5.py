@@ -21,7 +21,7 @@ for x in classes:
         for val, cnt in mushcl[col].value_counts().iteritems():
             pr = cnt/tot
             colp[val] = pr
-            clsp[col] = colp
+        clsp[col] = colp
         probs[x] = clsp
 
 
