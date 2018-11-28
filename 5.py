@@ -1,10 +1,15 @@
 import pandas as pd
+import numpy as np
 
-mush = pd.read_csv("data/flu.csv")
-# the first column in dataset is class which is target variable
-target = 'flu'
+
+mush = pd.read_csv("data/mushrooms.csv")
+mush = mush.replace('?', np.nan)
+mush.dropna(axis=1,inplace=True)
+
+target = 'class'
 features = mush.columns[mush.columns != target]
 classes = mush[target].unique()
+
 test = mush.sample(frac=.3)
 mush = mush.drop(test.index)
 
@@ -51,7 +56,6 @@ def classify(x):
 
 b = []
 for i in mush.index:
-    print(classify(mush.loc[i, features]), mush.loc[i, target])
     b.append(classify(mush.loc[i, features]) == mush.loc[i, target])
 print(sum(b), "correct of", len(mush))
 print("Accuracy:", sum(b)/len(mush))
@@ -59,7 +63,6 @@ print("Accuracy:", sum(b)/len(mush))
 # Test data
 b = []
 for i in test.index:
-    print(classify(test.loc[i, features]), test.loc[i, target])
     b.append(classify(test.loc[i, features]) == test.loc[i, target])
 print(sum(b), "correct of", len(test))
 print("Accuracy:", sum(b)/len(test))
