@@ -1,3 +1,3 @@
 # Machine Learning Lab Programs
 ### Overview
-The repo contains first 5 lab programs and the required data files.
+The repo contains all 10 lab programs and the required data files.
