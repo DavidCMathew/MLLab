@@ -21,7 +21,7 @@ labels = kmeans.fit(X).predict(X)
 print("labels for kmeans:", labels)
 
 print('Graph using Kmeans Algorithm')
-plt.scatter(X[:, 0], X[:, 1], c=labels)
+plt.scatter(f1, f2, c=labels)
 
 centroids = kmeans.cluster_centers_
 print("centroids:", centroids)
@@ -29,11 +29,10 @@ plt.scatter(centroids[:, 0], centroids[:, 1], marker='*', c='red')
 
 plt.show()
 
-
-gmm = GaussianMixture(2).fit(X)
-labels = gmm.predict(X)
+gmm = GaussianMixture(2)
+labels = gmm.fit(X).predict(X)
 print("Labels for GMM: ", labels)
 
 print('Graph using EM Algorithm')
-plt.scatter(X[:, 0], X[:, 1], c=labels)
+plt.scatter(f1, f2, c=labels)
 plt.show()
