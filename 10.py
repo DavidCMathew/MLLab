@@ -39,11 +39,11 @@ if __name__ == '__main__':
     # y= 1 + 0.25*np.random.randn(n) # For Linear
 
     f = 0.25
-    yest = lowess(x, y, f=f, iter=3)
+    yest = lowess(x, y, f, 3)
 
     import pylab as pl
     pl.clf()
     pl.plot(x, y, label='y noisy')
-    pl.plot(x, yest, label='y pred')
+    pl.plot(x, yest, label='y predicted')
     pl.legend()
     pl.show()
