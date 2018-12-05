@@ -4,54 +4,54 @@ import numpy as np
 
 mush = pd.read_csv("data/mushrooms.csv")
 mush = mush.replace('?', np.nan)
-mush.dropna(axis=1,inplace=True)
+mush.dropna(axis=1, inplace=True)
 
 target = 'class'
 features = mush.columns[mush.columns != target]
-classes = mush[target].unique()
+target_classes = mush[target].unique()
 
 test = mush.sample(frac=.3)
 mush = mush.drop(test.index)
 
-probs = {}
-probcl = {}
-for x in classes:
+cond_probs = {}
+target_class_prob = {}
 
-    mushcl = mush[mush[target] == x][features]
-    tot = len(mushcl)
-    probcl[x] = float(tot/len(mush))
-    clsp = {}
-    for col in mushcl.columns:
-        colp = {}
-        for val, cnt in mushcl[col].value_counts().iteritems():
-            pr = cnt/tot
-            colp[val] = pr
-        clsp[col] = colp
-    probs[x] = clsp
+for t in target_classes:
+    mush_t = mush[mush[target] == t][features]
+    target_class_prob[t] = float(len(mush_t) / len(mush))
+    class_prob = {}
+
+    for col in mush_t.columns:
+        col_prob = {}
+        for val, cnt in mush_t[col].value_counts().iteritems():
+            pr = cnt/len(mush_t)
+            col_prob[val] = pr
+        class_prob[col] = col_prob
+    cond_probs[t] = class_prob
 
 
-def probabs(x):
-    probab = {}
-    for cl in classes:
-        pr = probcl[cl]
+def calc_probs(x):
+    probs = {}
+    for t in target_classes:
+        p = target_class_prob[t]
         for col, val in x.iteritems():
             try:
-                pr *= probs[cl][col][val]
+                p *= cond_probs[t][col][val]
             except:
-                pr = 0
-        probab[cl] = pr
-    return probab
+                p = 0
+        probs[t] = p
+    return probs
 
 
 def classify(x):
-    probab = probabs(x)
-    mx = 0
-    mxcl = ''
-    for cl, pr in probab.items():
-        if pr > mx:
-            mx = pr
-            mxcl = cl
-    return mxcl
+    probs = calc_probs(x)
+    max = 0
+    max_class = ''
+    for cl, pr in probs.items():
+        if pr > max:
+            max = pr
+            max_class = cl
+    return max_class
 
 
 b = []
