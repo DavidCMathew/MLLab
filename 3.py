@@ -92,10 +92,20 @@ def decision_tree(data, labels):
     return theTree
 
 
+def print_tree(tree, level):
+    if tree == 'yes' or tree == 'no':
+        print(' '*level, 'd =', tree)
+        return
+    for key,value in tree.items():
+        print(' ' * level, key)
+        print_tree(value, level * 2)
+
+
 with open('data/tennis.csv', 'r') as csvfile:
     fdata = [line.strip() for line in csvfile]
     metadata = fdata[0].split(',')
     train_data = [x.split(',') for x in fdata[1:]]
 
 tree = decision_tree(train_data, metadata)
+print_tree(tree, 1)
 print(tree)
